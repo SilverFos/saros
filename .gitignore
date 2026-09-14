@@ -2,3 +2,4 @@ parser
 *.o
 parser
 oui.txt
+*.db
