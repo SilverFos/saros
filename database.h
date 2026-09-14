@@ -4,6 +4,15 @@
 #include<string>
 #include"parse.h"
 
-void check_error(uint8_t rc, sqlite3 *db);
-int initdb(sqlite3* db, char *errorMessage_storage);
-void store(const std::string database_name, const struct etherFrame* name);
+//sqlite3* db;
+
+struct Database{
+	sqlite3* db = nullptr;
+	sqlite3_stmt* stmt = nullptr;
+};
+
+void initdb(sqlite3* db);
+void check_error(int rc, sqlite3* db);
+void openDatabase(Database& DB, const std::string& databaseName);
+void closeDatabase(Database& DB);
+void store(const etherFrame& frame, Database& DB); 
