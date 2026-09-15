@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/parser.dir/link.d CMakeFiles/parser.dir/main.cpp.o CMakeFiles/parser.dir/parse.cpp.o CMakeFiles/parser.dir/database.cpp.o CMakeFiles/parser.dir/socks.cpp.o -o parser  /usr/lib/libsqlite3.so

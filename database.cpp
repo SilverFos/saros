@@ -12,7 +12,6 @@ void check_error(int rc, sqlite3 *db) {
         if (rc != SQLITE_OK && rc != SQLITE_DONE && rc != SQLITE_ROW) // not_executed/op_not_completed/v2-indicating_no_new_row_added
         {
                 fprintf(stderr, "SQLite error: %s", sqlite3_errmsg(db));
-                sqlite3_close(db);
                 exit(1);
         }
 }
@@ -32,7 +31,7 @@ void initdb(sqlite3* db)
         if(return_code != SQLITE_OK){
                 fprintf(stderr, "Failed to create table: %s", errMsg);
                 sqlite3_free(errMsg);
-		exit(0);
+		exit(1);
         }
 }
 
@@ -43,12 +42,14 @@ void store(const etherFrame& ether, Database& DB)
 	char txtBuffer[50] = {};
 
 	std::string destName = macToString(txtBuffer, sizeof(txtBuffer), ether.destAdd);
-	std::string srcName = macToString(txtBuffer, sizeof(txtBuffer), ether.srcAdd);
-	std::string frmType = (ether.ethType>=1536) ? "Ethernet II (DIX)" : "IEEE 802.3 Frame";
-
 	sqlite3_bind_text(DB.stmt, 1, destName.c_str(), destName.size(), SQLITE_TRANSIENT);
+
+	std::string srcName = macToString(txtBuffer, sizeof(txtBuffer), ether.srcAdd);
 	sqlite3_bind_text(DB.stmt, 2, srcName.c_str(), srcName.size(), SQLITE_TRANSIENT);
+
+	std::string frmType = (ether.ethType>=1536) ? "Ethernet II (DIX)" : "IEEE 802.3 Frame";
 	sqlite3_bind_int(DB.stmt, 3, ether.ethType); 
+
 	sqlite3_bind_text(DB.stmt, 4, frmType.c_str(), frmType.size(), SQLITE_TRANSIENT);
 	sqlite3_bind_int(DB.stmt, 5, ether.payload.size()); 
 	sqlite3_step(DB.stmt);

@@ -8,7 +8,7 @@
 struct etherFrame{
         std::array<uint8_t, ETH_ALEN> destAdd = {}; 
         std::array<uint8_t, ETH_ALEN> srcAdd = {}; 
-        uint16_t ethType;
+        uint16_t ethType = 0;
         std::vector<uint8_t> payload;
 
 };

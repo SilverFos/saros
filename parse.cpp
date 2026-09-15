@@ -7,6 +7,7 @@
 #include"socks.h"
 #include"parse.h"
 #include"database.h"
+#include<linux/if_ether.h>
 
 //struct eth_sockaddr{
 //	uint16_t family;
@@ -39,7 +40,7 @@ char * macToString(char * buffer, size_t bufSize, const std::array<uint8_t, ETH_
 
 etherFrame *frameParse(uint8_t *buffer, ssize_t frameSize, etherFrame &frame)
 {
-	if(frameSize<0){
+	if(frameSize<ETH_HLEN){
 		perror("Failed to obtain frame.");
 		return nullptr;
 	}
