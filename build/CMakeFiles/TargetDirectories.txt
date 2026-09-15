@@ -1,3 +1,0 @@
-/home/silver/ntw_scanner/build/CMakeFiles/parser.dir
-/home/silver/ntw_scanner/build/CMakeFiles/edit_cache.dir
-/home/silver/ntw_scanner/build/CMakeFiles/rebuild_cache.dir
